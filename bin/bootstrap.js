@@ -325,42 +325,7 @@ CasperError.prototype = Object.getPrototypeOf(new Error());
     }
 	
 	
-	//
-	function patchRequireWindowsFallBack(require, requireDirs) {
-    "use strict";
-    require('webserver'); // force generation of phantomjs' require.cache for the webserver module
-    var fs = require('fs');
-    var phantomBuiltins = ['fs', 'webpage', 'system', 'webserver'];
-    var phantomRequire = phantom.__orig__require = require;
-    var requireCache = {};
-    function possiblePaths(path, requireDir) {
-        var dir, paths = [];
-        if (path[0] === '.') {
-            paths.push.apply(paths, [
-                fs.absolute(path),
-                fs.absolute(fs.pathJoin(requireDir, path))
-            ]);
-        } else if (path[0] === '/') {
-            paths.push(path);
-        } else {
-            dir = fs.absolute(requireDir);
-            while (dir !== '' && dir.lastIndexOf(':') !== dir.length - 1) {
-                paths.push(fs.pathJoin(dir, 'modules', path));
-                // nodejs compatibility
-                paths.push(fs.pathJoin(dir, 'node_modules', path));
-                dir = fs.dirname(dir);
-            }
-            paths.push(fs.pathJoin(requireDir, 'lib', path));
-            paths.push(fs.pathJoin(requireDir, 'modules', path));
-        }
-        return paths;
-    }
-    
-    patchedRequire.patched = true;
-    return patchedRequire;
-}
 	
-//
     /**
      * Initializes the CasperJS Command Line Interface.
      */
