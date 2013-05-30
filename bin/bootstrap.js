@@ -362,7 +362,6 @@ CasperError.prototype = Object.getPrototypeOf(new Error());
 
         if (!phantom.casperScriptBaseDir) {
             var scriptDir = fs.dirname(phantom.casperScript);
-			console.log(scriptDir);
             if (scriptDir === phantom.casperScript) {
                 scriptDir = '.';
             }
